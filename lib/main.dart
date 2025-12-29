@@ -1,11 +1,15 @@
-import 'package:clean_architecture_flutter/core/services/storage_service.dart';
-import 'package:clean_architecture_flutter/features/presentation/pages/home_page.dart';
+import 'package:clean_architecture_flutter/features/posts/data/repositories/post_repository_impl.dart';
+import 'package:clean_architecture_flutter/features/posts/domain/repositories/post_repository.dart';
+import 'package:clean_architecture_flutter/features/posts/presentation/controllers/post_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-void main() async{
+import 'features/posts/presentation/pages/home_page.dart';
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
- await Get.putAsync(() => StorageService().init());
+  final repository = PostRepositoryImpl();
+  Get.put(PostController(postRepository: repository));
   runApp(const MyApp());
 }
 
@@ -19,8 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const HomePage(),
+      home:  HomePage(),
     );
   }
 }
-
