@@ -1,11 +1,12 @@
-import 'package:clean_architecture_flutter/core/services/storage_service.dart';
-import 'package:clean_architecture_flutter/features/presentation/pages/home_page.dart';
+import 'package:clean_architecture_flutter/counter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
-void main() async{
+import 'home_page.dart';
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
- await Get.putAsync(() => StorageService().init());
   runApp(const MyApp());
 }
 
@@ -14,13 +15,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+    return BlocProvider(
+      create: (context) => CounterBloc(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        ),
+        home: const HomePage(),
       ),
-      home: const HomePage(),
     );
   }
 }
-
